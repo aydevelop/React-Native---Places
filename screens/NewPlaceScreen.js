@@ -11,6 +11,7 @@ import {
 
 import Colors from '../constants/Colors'
 import * as placesActions from '../store/places-actions'
+import ImagePicker from '../components/ImagePicker'
 
 const NewPlaceScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
@@ -20,6 +21,7 @@ const NewPlaceScreen = ({ navigation }) => {
   })
 
   const [titleValue, setTitleValue] = useState('')
+  const [selectedImage, setSelectedImage] = useState(null)
   const dispatch = useDispatch()
 
   const titleChangeHandler = (text) => {
@@ -27,8 +29,12 @@ const NewPlaceScreen = ({ navigation }) => {
   }
 
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue))
+    dispatch(placesActions.addPlace(titleValue, selectedImage))
     navigation.goBack()
+  }
+
+  const imageTakenHandler = (imagePath) => {
+    setSelectedImage(imagePath)
   }
 
   return (
@@ -36,6 +42,7 @@ const NewPlaceScreen = ({ navigation }) => {
       <View style={styles.form}>
         <Text style={styles.label}>Title</Text>
         <TextInput style={styles.textInput} onChangeText={titleChangeHandler} />
+        <ImagePicker onImageTake={imageTakenHandler} />
         <Button
           title='Save Place'
           color={Colors.primary}
