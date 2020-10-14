@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -9,23 +8,38 @@ import NewPlaceScreen from './screens/NewPlaceScreen'
 import MapScreen from './screens/MapScreen'
 import Colors from './constants/Colors'
 
+//___________________________ Redux ___________________________
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import ReduxThunk from 'redux-thunk'
+
+import placesReducer from './store/places-reducer'
+const rootReducer = combineReducers({ places: placesReducer })
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
+//____________________________________________________________
+
 const Stack = createStackNavigator()
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName='PlacesListScreen'
-        screenOptions={{
-          headerTintColor: 'white',
-          headerStyle: { backgroundColor: Colors.primary },
-        }}
-      >
-        <Stack.Screen name='PlacesListScreen' component={PlacesListScreen} />
-        <Stack.Screen name='PlaceDetailScreen' component={PlaceDetailScreen} />
-        <Stack.Screen name='NewPlaceScreen' component={NewPlaceScreen} />
-        <Stack.Screen name='MapScreen' component={MapScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName='PlacesListScreen'
+          screenOptions={{
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: Colors.primary },
+          }}
+        >
+          <Stack.Screen name='PlacesListScreen' component={PlacesListScreen} />
+          <Stack.Screen
+            name='PlaceDetailScreen'
+            component={PlaceDetailScreen}
+          />
+          <Stack.Screen name='NewPlaceScreen' component={NewPlaceScreen} />
+          <Stack.Screen name='MapScreen' component={MapScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   )
 }
 
