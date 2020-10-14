@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform, FlatList } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { useSelector } from 'react-redux'
 
 import IoniconsHeaderButton from '../components/HeaderButton'
+import PlaceItem from '../components/PlaceItem'
 
 const PlacesListScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
@@ -22,10 +24,25 @@ const PlacesListScreen = ({ navigation }) => {
     })
   })
 
+  const places = useSelector((state) => state.places.places)
+
   return (
-    <View>
-      <Text>PlacesListScreen</Text>
-    </View>
+    <FlatList
+      data={places}
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
+        <PlaceItem
+          image={null}
+          title={itemData.item.title}
+          address={null}
+          onSelect={() => {
+            navigation.navigate('PlaceDetailScreen', {
+              place: itemData.item,
+            })
+          }}
+        />
+      )}
+    />
   )
 }
 
