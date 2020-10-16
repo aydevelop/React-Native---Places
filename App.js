@@ -18,6 +18,15 @@ const rootReducer = combineReducers({ places: placesReducer })
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 //____________________________________________________________
 
+import { init } from './helpers/db'
+init()
+  .then(() => {
+    console.log('Init DB')
+  })
+  .catch((err) => {
+    console.log('Init DB fail: ' + err.toString())
+  })
+
 const Stack = createStackNavigator()
 function App() {
   return (

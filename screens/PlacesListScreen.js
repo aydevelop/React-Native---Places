@@ -1,12 +1,16 @@
 import React from 'react'
 import { View, Text, StyleSheet, Platform, FlatList } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import IoniconsHeaderButton from '../components/HeaderButton'
 import PlaceItem from '../components/PlaceItem'
+import * as placesActions from '../store/places-actions'
 
 const PlacesListScreen = ({ navigation }) => {
+  const places = useSelector((state) => state.places.places)
+  const dispatch = useDispatch()
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: 'All Places',
@@ -24,7 +28,9 @@ const PlacesListScreen = ({ navigation }) => {
     })
   })
 
-  const places = useSelector((state) => state.places.places)
+  React.useEffect(() => {
+    dispatch(placesActions.loadPlaces())
+  }, [dispatch])
 
   return (
     <FlatList
