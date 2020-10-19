@@ -12,6 +12,7 @@ import {
 import Colors from '../constants/Colors'
 import * as placesActions from '../store/places-actions'
 import ImagePicker from '../components/ImagePicker'
+import LocationPicker from '../components/LocationPicker'
 
 const NewPlaceScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
@@ -43,6 +44,7 @@ const NewPlaceScreen = ({ navigation }) => {
         <Text style={styles.label}>Title</Text>
         <TextInput style={styles.textInput} onChangeText={titleChangeHandler} />
         <ImagePicker onImageTake={imageTakenHandler} />
+        <LocationPicker />
         <Button
           title='Save Place'
           color={Colors.primary}
