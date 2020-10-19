@@ -14,6 +14,7 @@ import Colors from '../constants/Colors'
 
 const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState(false)
+  const [pickedLocation, setPickedLocation] = useState({})
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION)
@@ -37,6 +38,11 @@ const LocationPicker = (props) => {
       setIsFetching(true)
       const location = await Location.getCurrentPositionAsync({
         timeout: 5000,
+      })
+
+      setPickedLocation({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
       })
     } catch (err) {
       Alert.alert(
@@ -63,12 +69,18 @@ const LocationPicker = (props) => {
             <Text
               style={{ borderBottomWidth: 1, padding: 10, textAlign: 'center' }}
             >
-              No location chosen yet!
+              {!pickedLocation
+                ? 'No location chosen yet!'
+                : `Your location: \r\n Latitude ${pickedLocation.lat}, \r\nLongitude ${pickedLocation.lng}`}
             </Text>
           )}
         </View>
       </View>
-      <Button title='Get User Location' color={Colors.primary} />
+      <Button
+        title='Get User Location'
+        onPress={getLocationHandler}
+        color={Colors.primary}
+      />
     </View>
   )
 }

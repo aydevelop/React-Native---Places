@@ -23,6 +23,7 @@ const NewPlaceScreen = ({ navigation }) => {
 
   const [titleValue, setTitleValue] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [pickedLocation, setPickedLocation] = useState({})
   const dispatch = useDispatch()
 
   const titleChangeHandler = (text) => {
@@ -38,13 +39,18 @@ const NewPlaceScreen = ({ navigation }) => {
     setSelectedImage(imagePath)
   }
 
+  const geoTakenHandler = (geoPath) => {
+    pickedLocation(geoPath)
+    console.log(geoPath)
+  }
+
   return (
     <ScrollView>
       <View style={styles.form}>
         <Text style={styles.label}>Title</Text>
         <TextInput style={styles.textInput} onChangeText={titleChangeHandler} />
         <ImagePicker onImageTake={imageTakenHandler} />
-        <LocationPicker />
+        <LocationPicker onGeoTake={geoTakenHandler} />
         <Button
           title='Save Place'
           color={Colors.primary}
