@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  Alert,
 } from 'react-native'
 
 import Colors from '../constants/Colors'
@@ -23,7 +24,7 @@ const NewPlaceScreen = ({ navigation }) => {
 
   const [titleValue, setTitleValue] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
-  const [pickedLocation, setPickedLocation] = useState({})
+  const [pickedLocation, setPickedLocation] = useState({ lat: 0, lng: 0 })
   const dispatch = useDispatch()
 
   const titleChangeHandler = (text) => {
@@ -31,7 +32,11 @@ const NewPlaceScreen = ({ navigation }) => {
   }
 
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue, selectedImage))
+    if (!titleValue) {
+      Alert.alert('', 'You need to provide a title', [{ text: 'Okay' }])
+    }
+
+    dispatch(placesActions.addPlace(titleValue, selectedImage, pickedLocation))
     navigation.goBack()
   }
 
@@ -40,8 +45,7 @@ const NewPlaceScreen = ({ navigation }) => {
   }
 
   const geoTakenHandler = (geoPath) => {
-    pickedLocation(geoPath)
-    console.log(geoPath)
+    setPickedLocation(geoPath)
   }
 
   return (
