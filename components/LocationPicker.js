@@ -42,12 +42,13 @@ const LocationPicker = (props) => {
         timeout: 10000,
       })
 
-      setPickedLocation({
+      const loc = {
         lat: location.coords.latitude,
         lng: location.coords.longitude,
-      })
+      }
 
-      props.onGeoTake(pickedLocation)
+      setPickedLocation(loc)
+      props.onGeoTake(loc)
     } catch (err) {
       Alert.alert(
         'Could not fetch location!',
@@ -73,7 +74,6 @@ const LocationPicker = (props) => {
             <View>
               <Text
                 style={{
-                  borderBottomWidth: 1,
                   padding: 10,
                   textAlign: 'center',
                 }}
@@ -82,17 +82,6 @@ const LocationPicker = (props) => {
                   ? 'No location chosen yet!'
                   : `Your location: \r\n Latitude ${pickedLocation.lat}, Longitude ${pickedLocation.lng}`}
               </Text>
-              {pickedLocation && (
-                <Image
-                  style={{
-                    width: '100%',
-                    height: 190,
-                  }}
-                  source={{
-                    uri: `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s-heart+285A98(-73.7638,42.6564)/-73.7638,42.6564,7,0/300x180@2x?access_token=pk.eyJ1IjoicGV5ZXhhNzY3NyIsImEiOiJja2dpMjJpZjUwNnc2MnFxaTk3aTJreTY1In0.X5-He6upjtRVuRwK12SOiA`,
-                  }}
-                />
-              )}
             </View>
           )}
         </View>
@@ -115,7 +104,7 @@ const styles = StyleSheet.create({
   mapPreview: {
     marginBottom: 10,
     width: '100%',
-    height: 270,
+    height: 85,
     borderColor: '#ccc',
     borderWidth: 1,
   },

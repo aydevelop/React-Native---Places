@@ -17,7 +17,10 @@ export default (state = initialState, action) => {
       const newPlace = new Place(
         new Date().toString(),
         action.placeData.title,
-        action.placeData.image
+        action.placeData.image,
+        '',
+        action.placeData.loc.lat,
+        action.placeData.loc.lng
       )
       return {
         places: state.places.concat(newPlace),

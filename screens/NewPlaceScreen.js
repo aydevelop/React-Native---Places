@@ -34,6 +34,7 @@ const NewPlaceScreen = ({ navigation }) => {
   const savePlaceHandler = () => {
     if (!titleValue) {
       Alert.alert('', 'You need to provide a title', [{ text: 'Okay' }])
+      return
     }
 
     dispatch(placesActions.addPlace(titleValue, selectedImage, pickedLocation))

@@ -5,7 +5,7 @@ import { insertPlace, fetchPlaces } from '../helpers/db'
 export const ADD_PLACE = 'ADD_PLACE'
 export const SET_PLACES = 'SET_PLACES'
 
-export const addPlace = (title, image) => {
+export const addPlace = (title, image, loc) => {
   return async (dispatch) => {
     try {
       let fileName = null
@@ -25,13 +25,13 @@ export const addPlace = (title, image) => {
         title,
         newPath,
         'Dummy address',
-        15.6,
-        12.3
+        loc.lat,
+        loc.lng
       )
 
       dispatch({
         type: ADD_PLACE,
-        placeData: { id: dbResult.insertId, title: title, image: newPath },
+        placeData: { id: dbResult.insertId, title: title, image: newPath, loc },
       })
     } catch (err) {
       console.log('Error: ' + err)
