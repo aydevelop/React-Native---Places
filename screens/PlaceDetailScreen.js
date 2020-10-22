@@ -18,23 +18,16 @@ const PlaceDetailScreen = ({ route, navigation }) => {
         />
       )}
       {route.params.place.lat > 0 && route.params.place.lng > 0 && (
-        <MapView
-          style={{ height: '50%' }}
-          region={{
-            latitude: route.params.place.lat,
-            longitude: route.params.place.lng,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+        <Image
+          source={{
+            uri: `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s-heart+285A98(${
+              route.params.place.lng + `,` + route.params.place.lat
+            })/${
+              route.params.place.lng + `,` + route.params.place.lat
+            },7,0/300x180@2x?access_token=pk.eyJ1IjoicGV5ZXhhNzY3NyIsImEiOiJja2dpMjJpZjUwNnc2MnFxaTk3aTJreTY1In0.X5-He6upjtRVuRwK12SOiA`,
           }}
-        >
-          <Marker
-            title='Picked Location'
-            coordinate={{
-              latitude: route.params.place.lat,
-              longitude: route.params.place.lng,
-            }}
-          />
-        </MapView>
+          style={{ height: '50%' }}
+        />
       )}
     </View>
   )
