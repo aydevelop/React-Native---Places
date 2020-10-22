@@ -68,11 +68,12 @@ const NewPlaceScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   form: {
-    margin: 30,
+    margin: 15,
+    marginBottom: 40,
   },
   label: {
     fontSize: 18,
-    marginBottom: 15,
+    marginBottom: 1,
   },
   textInput: {
     borderBottomColor: '#ccc',
