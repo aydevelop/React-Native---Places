@@ -17,7 +17,7 @@ const PlaceDetailScreen = ({ route, navigation }) => {
           style={{ height: '50%' }}
         />
       )}
-      {route.params.place.lat > 0 && route.params.place.lng > 0 && (
+      {route.params.place.lat != 0 && route.params.place.lng != 0 && (
         <Image
           source={{
             uri: `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s-heart+285A98(${
